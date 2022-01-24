@@ -40,7 +40,7 @@ macro(onedpl_add_test test_source_file)
         target_compile_options(${_test_name} PRIVATE $<$<CONFIG:Release>:-fno-strict-aliasing>)
     endif()
 
-    target_compile_options(${_test_name} PRIVATE -P)
+    target_compile_options(${_test_name} PRIVATE -P${_test_name}.o)
 
     target_include_directories(${_test_name} PRIVATE "${CMAKE_CURRENT_LIST_DIR}")
     target_link_libraries(${_test_name} PRIVATE oneDPL)
