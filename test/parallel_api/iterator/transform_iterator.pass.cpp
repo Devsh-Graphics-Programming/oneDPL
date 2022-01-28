@@ -34,10 +34,11 @@ DEFINE_TEST(test_copy)
     template <typename ExecutionPolicy, typename Iterator1, typename Iterator2, typename Size, typename TExpectedValue>
     void operator()(ExecutionPolicy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Size n, TExpectedValue expected_value)
     {
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
+    
         ::std::copy(::std::forward<ExecutionPolicy>(exec), first1, last1, first2);
-
-        TestDataRead<UDTKind::eVals, Size> host_vals(*this, n);
-
+        
+        host_vals.retrieve_data();
         auto res_begin = host_vals.get();
         for(int i = 0; i != n; ++i) {
             EXPECT_EQ(expected_value, *res_begin, "Wrong result from copy with transform_iterator");
