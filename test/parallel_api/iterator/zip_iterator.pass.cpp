@@ -110,7 +110,7 @@ DEFINE_TEST(test_for_each)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
@@ -142,7 +142,7 @@ DEFINE_TEST(test_for_each_structured_binding)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
@@ -178,7 +178,7 @@ DEFINE_TEST(test_transform_reduce_unary)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
@@ -205,7 +205,7 @@ DEFINE_TEST(test_transform_reduce_binary)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 /* first2 */, Iterator2 /* last2 */, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
@@ -232,7 +232,7 @@ DEFINE_TEST(test_min_element)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         using IteratorValueType = typename ::std::iterator_traits<Iterator>::value_type;
 
@@ -273,7 +273,7 @@ DEFINE_TEST(test_count_if)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         using ValueType = typename ::std::iterator_traits<Iterator>::value_type;
         using ReturnType = typename ::std::iterator_traits<Iterator>::difference_type;
@@ -307,8 +307,8 @@ DEFINE_TEST(test_equal)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 /* last2 */, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
         using T = typename ::std::iterator_traits<Iterator1>::value_type;
 
@@ -351,8 +351,8 @@ DEFINE_TEST(test_equal_structured_binding)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 /* last2 */, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
         using T = typename ::std::iterator_traits<Iterator1>::value_type;
 
@@ -405,7 +405,7 @@ DEFINE_TEST(test_find_if)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
@@ -456,7 +456,7 @@ DEFINE_TEST(test_transform_inclusive_scan)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
@@ -487,7 +487,7 @@ DEFINE_TEST(test_unique)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         using Iterator1ValueType = typename ::std::iterator_traits<Iterator1>::value_type;
 
@@ -526,8 +526,8 @@ DEFINE_TEST(test_unique_copy)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 /* last2 */, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
         using Iterator1ValueType = typename ::std::iterator_traits<Iterator1>::value_type;
 
@@ -570,8 +570,8 @@ DEFINE_TEST(test_merge)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 /* last1 */, Iterator2 first2, Iterator2 /* last2 */, Iterator3 first3,
                Iterator3 /* last3 */, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         typedef typename ::std::iterator_traits<Iterator2>::value_type T2;
@@ -587,16 +587,16 @@ DEFINE_TEST(test_merge)
                             value = odd;
                             odd += 2;
                         });
+        host_keys.update_data();
         ::std::for_each(host_vals.get(), host_vals.get() + size2,
                         [&even](T2& value)
                         {
                             value = even;
                             even += 2;
                         });
-        host_keys.update_data();
         host_vals.update_data();
         {
-            TestDataUpdate<UDTKind::eRes, Size> host_res(*this, n);
+            TestDataTransfer<UDTKind::eRes, Size> host_res(*this, n);
             ::std::fill(host_res.get(), host_res.get() + n, T3{ -1 });
             host_res.update_data();
         }
@@ -614,15 +614,25 @@ DEFINE_TEST(test_merge)
 #endif
 
         size_t res_size = tuple_last3 - tuple_first3;
+
+        assert(res_size <= 2 * n);
+        TestDataTransfer<UDTKind::eRes, Size> host_res(*this, res_size);
+
         size_t exp_size = size1 + size2;
         bool is_correct = res_size == exp_size;
         EXPECT_TRUE(is_correct, "wrong result from merge (tuple)");
+
         host_keys.retrieve_data();
         host_vals.retrieve_data();
-        TestDataRead<UDTKind::eRes, Size> host_res(*this, res_size);
+        host_res.retrieve_data();
+
+        auto host_first1 = host_keys.get();
+        auto host_first2 = host_vals.get();
+        auto host_first3 = host_res.get();
+
         for (size_t i = 0; i < ::std::min(res_size, exp_size) && is_correct; ++i)
-            if ((i < size2 * 2 && *(host_res.get() + i) != i) ||
-                (i >= size2 * 2 && *(host_res.get() + i) != *(host_keys.get() + i - size2)))
+            if ((i < size2 * 2 && *(host_first3 + i) != i) ||
+                (i >= size2 * 2 && *(host_first3 + i) != *(host_first1 + i - size2)))
                 is_correct = false;
         EXPECT_TRUE(is_correct, "wrong effect from merge (tuple)");
     }
@@ -636,8 +646,8 @@ DEFINE_TEST(test_stable_sort)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
         using T =  typename ::std::iterator_traits<Iterator1>::value_type;
 
@@ -670,8 +680,8 @@ DEFINE_TEST(test_lexicographical_compare)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
         using ValueType = typename ::std::iterator_traits<Iterator1>::value_type;
 
@@ -728,8 +738,8 @@ DEFINE_TEST(test_counting_zip_transform)
         if (n < 6)
             return;
 
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
         using ValueType = typename ::std::iterator_traits<Iterator2>::value_type;
 
@@ -813,7 +823,7 @@ test_usm()
 #endif
 #if defined(_PSTL_TEST_MERGE)
     PRINT_DEBUG("test_merge");
-    test3buffers<alloc_type, test_merge<ValueType>>();
+    test3buffers<alloc_type, test_merge<ValueType>>(2);
 #endif
 // sorting with zip iterator does not meet limits of RAM usage on FPGA.
 // TODO: try to investigate and reduce RAM consumption
