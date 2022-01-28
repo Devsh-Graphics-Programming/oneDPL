@@ -38,6 +38,8 @@ class Sequence
 
 public:
 
+    using value_type = T;
+
     using iterator       = typename ::std::vector<T>::iterator;
     using const_iterator = typename ::std::vector<T>::const_iterator;
 
@@ -47,8 +49,7 @@ public:
     using bidirectional_iterator       = BidirectionalIterator<iterator, ::std::bidirectional_iterator_tag>;
     using const_bidirectional_iterator = BidirectionalIterator<const_iterator, ::std::bidirectional_iterator_tag>;
 
-    typedef T value_type;
-    explicit Sequence(size_t size) : m_storage(size) {}
+    explicit Sequence(size_t size);
 
     // Construct sequence [f(0), f(1), ... f(size-1)]
     // f can rely on its invocations being sequential from 0 to size-1.
@@ -98,6 +99,13 @@ fill_data(Iterator first, Iterator last, F f)
     {
         *first = T(f(i));
     }
+}
+
+//--------------------------------------------------------------------------------------------------------------------//
+template <typename T>
+Sequence<T>::Sequence(size_t size)
+    : m_storage(size)
+{
 }
 
 //--------------------------------------------------------------------------------------------------------------------//
