@@ -61,9 +61,9 @@ DEFINE_TEST(test_lower_bound)
     operator()(Policy&& exec, Iterator1 first, Iterator1 last, Iterator2 value_first, Iterator2 value_last,
                Iterator3 result_first, Iterator3 result_last, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys(*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals(*this, n);
-        TestDataUpdate<UDTKind::eRes,  Size> host_res (*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eRes,  Size> host_res (*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type ValueT;
 
