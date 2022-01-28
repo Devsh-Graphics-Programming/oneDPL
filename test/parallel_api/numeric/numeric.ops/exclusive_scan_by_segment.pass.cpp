@@ -94,9 +94,9 @@ DEFINE_TEST(test_exclusive_scan_by_segment)
     operator()(Policy&& exec, Iterator1 keys_first, Iterator1 keys_last, Iterator2 vals_first, Iterator2 vals_last,
                Iterator3 val_res_first, Iterator3 val_res_last, Size n)
     {
-        TestDataUpdate<UDTKind::eKeys, Size> host_keys   (*this, n);
-        TestDataUpdate<UDTKind::eVals, Size> host_vals   (*this, n);
-        TestDataUpdate<UDTKind::eRes,  Size> host_val_res(*this, n);
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys   (*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals   (*this, n);
+        TestDataTransfer<UDTKind::eRes,  Size> host_val_res(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type KeyT;
         typedef typename ::std::iterator_traits<Iterator2>::value_type ValT;
