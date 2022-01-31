@@ -108,7 +108,10 @@ struct test_base_data_usm : test_base_data<TestValueType>
             }
         }
     };
-    ::std::vector<Data> data;
+    ::std::vector<Data> data;   // Vector of source test data:
+                                //  - 1 item for test1buffer;
+                                //  - 2 items for test2buffers;
+                                //  - 3 items for test3buffers
 
     struct InitParam
     {
@@ -169,7 +172,10 @@ struct test_base_data_buffer : test_base_data<TestValueType>
         {
         }
     };
-    ::std::vector<Data> data;
+    ::std::vector<Data> data;   // Vector of source test data:
+                                //  - 1 item for test1buffer;
+                                //  - 2 items for test2buffers;
+                                //  - 3 items for test3buffers
 
     test_base_data_buffer(::std::initializer_list<Data> init)
         : data(init)
@@ -211,7 +217,8 @@ struct test_base_data_sequence : test_base_data<TestValueType>
         {
         }
     };
-    ::std::vector<Data> data;
+    ::std::vector<Data> data;   // Vector of source test data:
+                                //  - 3 items for test_algo_three_sequences
 
     test_base_data_sequence(::std::initializer_list<Data> init)
         : data(init)
