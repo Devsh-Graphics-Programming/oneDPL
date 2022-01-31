@@ -28,12 +28,12 @@
 namespace TestUtils
 {
 ////////////////////////////////////////////////////////////////////////////////
-//
+/// enum UDTKind - describe test source data kinds
 enum class UDTKind
 {
-    eKeys = 0,
-    eVals,
-    eRes
+    eKeys = 0,  // Keys
+    eVals,      // Values
+    eRes        // Results
 };
 
 template <typename TEnum>
@@ -48,15 +48,19 @@ template <typename TestValueType>
 struct test_base_data_visitor;
 
 ////////////////////////////////////////////////////////////////////////////////
-//
+// struct test_base_data - test source data base class
 template <typename TestValueType>
 struct test_base_data
 {
+    /// Visit all test data
+    /**
+     * @param test_base_data_visitor<TestValueType>* visitor - pointer to visitor
+     */
     virtual void visit(test_base_data_visitor<TestValueType>* visitor) = 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-///
+/// struct test_base_data_usm -  test source data for USM shared/device memory
 #if TEST_DPCPP_BACKEND_PRESENT
 template <typename TestValueType>
 struct test_base_data_usm : test_base_data<TestValueType>
@@ -66,9 +70,9 @@ struct test_base_data_usm : test_base_data<TestValueType>
         using TSourceData = usm_data_transfer_base<TestValueType>;
         using TSourceDataPtr = ::std::unique_ptr<TSourceData>;
 
-        sycl::usm::alloc alloc_type;
-        TSourceDataPtr   src_data_usm;
-        ::std::size_t    offset = 0;
+        sycl::usm::alloc alloc_type;        // USM alloc type (shared/device)
+        TSourceDataPtr   src_data_usm;      // USM data transfer helper
+        ::std::size_t    offset = 0;        // Offset in USM buffer
 
         template<typename _Size>
         Data(sycl::usm::alloc __alloc_type, sycl::queue __q, _Size __sz, ::std::size_t __offset)
@@ -148,6 +152,7 @@ struct test_base_data_usm : test_base_data<TestValueType>
 
 #if TEST_DPCPP_BACKEND_PRESENT
 ////////////////////////////////////////////////////////////////////////////////
+/// struct test_base_data_buffer - test source data for SYCL buffer
 template <typename TestValueType>
 struct test_base_data_buffer : test_base_data<TestValueType>
 {
@@ -155,8 +160,8 @@ struct test_base_data_buffer : test_base_data<TestValueType>
     {
         using TSourceData = sycl::buffer<TestValueType, 1>;
 
-        TSourceData   src_data_buf;
-        ::std::size_t offset = 0;
+        TSourceData   src_data_buf;     // SYCL buffer
+        ::std::size_t offset = 0;       // Offset in SYCL buffer
 
         template<typename _Size>
         Data(_Size __sz, ::std::size_t __offset)
@@ -190,6 +195,7 @@ struct test_base_data_buffer : test_base_data<TestValueType>
 #endif // TEST_DPCPP_BACKEND_PRESENT
 
 ////////////////////////////////////////////////////////////////////////////////
+/// struct test_base_data_sequence -  test source data for sequence (based on std::vector)
 template <typename TestValueType>
 struct test_base_data_sequence : test_base_data<TestValueType>
 {
@@ -197,8 +203,8 @@ struct test_base_data_sequence : test_base_data<TestValueType>
     {
         using TSourceData = Sequence<TestValueType>;
 
-        TSourceData   src_data_seq;
-        ::std::size_t offset = 0;
+        TSourceData   src_data_seq;     // Sequence
+        ::std::size_t offset = 0;       // Offset in sequence
 
         Data(::std::size_t size, ::std::size_t __offset)
             : src_data_seq(size)
@@ -225,6 +231,7 @@ struct test_base_data_sequence : test_base_data<TestValueType>
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// struct test_base_data_visitor - interface of source test data visitor
 template <typename TestValueType>
 struct test_base_data_visitor
 {
@@ -236,6 +243,7 @@ struct test_base_data_visitor
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// struct test_base_data_visitor_impl - base implementation of source test data visitor
 template <typename TestValueType, typename Iterator>
 struct test_base_data_visitor_impl : test_base_data_visitor<TestValueType>
 {
@@ -244,12 +252,13 @@ struct test_base_data_visitor_impl : test_base_data_visitor<TestValueType>
     {
     }
 
-    const UDTKind  __kind;
-    const Iterator __it_from;
-    const Iterator __it_to;
+    const UDTKind  __kind;          // Source test data kind (keys, values, results)
+    const Iterator __it_from;       // Begin iterator in [begin, end)
+    const Iterator __it_to;         // End itedator in [begin, end)
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// struct test_base_data_visitor_retrieve - implementation of retrieve data visitor
 template <typename TestValueType, typename Iterator>
 struct test_base_data_visitor_retrieve : test_base_data_visitor_impl<TestValueType, Iterator>
 {
@@ -268,6 +277,7 @@ struct test_base_data_visitor_retrieve : test_base_data_visitor_impl<TestValueTy
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// struct test_base_data_visitor_update - implementation of update data visitor
 template <typename TestValueType, typename Iterator>
 struct test_base_data_visitor_update : test_base_data_visitor_impl<TestValueType, Iterator>
 {
@@ -286,7 +296,7 @@ struct test_base_data_visitor_update : test_base_data_visitor_impl<TestValueType
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-///
+/// struct test_base - base class for new tests
 template <typename TestValueType>
 struct test_base
 {
@@ -297,6 +307,8 @@ struct test_base
     {
     }
 
+    /// class TestDataTransfer - copy test data from/to source test data storage
+    /// to/from local buffer for modification processing.
     template <UDTKind kind, typename Size>
     class TestDataTransfer
     {
@@ -305,6 +317,11 @@ struct test_base
         using HostData = std::vector<TestValueType>;
         using Iterator = typename HostData::iterator;
 
+        /// Constructor
+        /**
+         * @param test_base& _test_base - reference to test base class
+         * @param Size _count - count of objects in source test storage
+         */
         TestDataTransfer(test_base& _test_base, Size _count)
             : __test_base(_test_base)
             , __host_buffer(_count)
@@ -312,11 +329,20 @@ struct test_base
         {
         }
 
+        /// Get pointer to internala data buffer
+        /**
+         * @return TestValueType* - pointer to internal data buffer
+         */
         TestValueType* get()
         {
             return __host_buffer.data();
         }
 
+        /// Retrieve data
+        /**
+         * Method copy data from test source data storage (USM shared/device buffer, SYCL buffer)
+         * to internal buffer.
+         */
         void retrieve_data()
         {
             test_base_data_visitor_retrieve<TestValueType, Iterator> visitor_retrieve(
@@ -325,6 +351,12 @@ struct test_base
             __test_base.base_data_ref.visit(&visitor_retrieve);
         }
 
+        /// Update data
+        /**
+         * Method copy data from internal buffer to test source data storage.
+         * 
+         * @param Size count - count of items to copy, if 0 - copy all data.
+         */
         void update_data(Size count = 0)
         {
             assert(count <= __count);
@@ -340,9 +372,9 @@ struct test_base
 
     protected:
 
-        test_base& __test_base;
-        HostData   __host_buffer;
-        const Size __count = 0;
+        test_base& __test_base;     // Test base class ref
+        HostData   __host_buffer;   // Local test data buffer
+        const Size __count = 0;     // Count of items in test data
     };
 };
 
@@ -357,6 +389,7 @@ void update_data()
 }
 };
 
+/// Copy data from source test data storage into local buffers
 template <typename TTestDataTransfer, typename... Args>
 void retrieve_data(TTestDataTransfer& helper, Args&& ...args)
 {
@@ -364,6 +397,7 @@ void retrieve_data(TTestDataTransfer& helper, Args&& ...args)
     retrieve_data(::std::forward<Args>(args)...);
 }
 
+/// Copy data from local buffers into source test data storage
 template <typename TTestDataTransfer, typename... Args>
 void update_data(TTestDataTransfer& helper, Args&& ...args)
 {
