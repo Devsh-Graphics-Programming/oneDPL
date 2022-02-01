@@ -307,6 +307,8 @@ struct test_base_data_sequence : test_base_data<TestValueType>
 
 ////////////////////////////////////////////////////////////////////////////////
 /// struct test_base_data_visitor - interface of source test data visitor
+/// By using this interface we may traverse throught all source test data
+/// of different kinds: USM shared/device memory, SYCL::buffer and Sequence.
 template <typename TestValueType>
 struct test_base_data_visitor
 {
