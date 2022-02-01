@@ -141,6 +141,11 @@ struct test_base_data_usm : test_base_data<TestValueType>
             return result;
         }
 
+        /// Retrieve data from USM shared/device memory
+        /**
+         * @param _Iterator __it - start iterator
+         * @param TDiff __objects_count - retrieving items couunt
+         */
         template<typename _Iterator, typename TDiff>
         void retrieve_data(_Iterator __it, TDiff __objects_count)
         {
@@ -159,6 +164,11 @@ struct test_base_data_usm : test_base_data<TestValueType>
             }
         }
 
+        /// Update data in USM shared/device memory
+        /**
+         * @param _Iterator __it - start iterator
+         * @param TDiff __objects_count - updating items couunt
+         */
         template<typename _Iterator, typename TDiff>
         void update_data(_Iterator __it, TDiff __objects_count)
         {
