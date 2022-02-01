@@ -212,8 +212,9 @@ struct test_base_data_usm : test_base_data<TestValueType>
         return data_item.get_start_from();
     }
 
-    // test_base_data
+// test_base_data
 
+    // Visit all test data
     virtual void visit(test_base_data_visitor<TestValueType>* visitor) override;
 };
 #endif // TEST_DPCPP_BACKEND_PRESENT
@@ -259,8 +260,9 @@ struct test_base_data_buffer : test_base_data<TestValueType>
         return oneapi::dpl::begin(data.at(index).src_data_buf) + data.at(index).offset;
     }
 
-    // test_base_data
+// test_base_data
 
+    // Visit all test data
     virtual void visit(test_base_data_visitor<TestValueType>* visitor) override;
 };
 #endif // TEST_DPCPP_BACKEND_PRESENT
@@ -297,8 +299,9 @@ struct test_base_data_sequence : test_base_data<TestValueType>
         return data.at(index).src_data_seq.begin() + data.at(index).offset;
     }
 
-    // test_base_data
+// test_base_data
 
+    // Visit all test data
     virtual void visit(test_base_data_visitor<TestValueType>* visitor) override;
 };
 
