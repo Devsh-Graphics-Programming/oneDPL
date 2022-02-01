@@ -450,7 +450,7 @@ struct test_base
     protected:
 
         test_base& __test_base;     // Test base class ref
-        HostData   __host_buffer;   // Local test data buffer
+        HostData   __host_buffer;   // Local test data buffer           // TODO required use this field only for USM device memory and SYCL::buffer
         const Size __count = 0;     // Count of items in test data
     };
 };
