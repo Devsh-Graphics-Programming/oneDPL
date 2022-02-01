@@ -48,7 +48,7 @@ template <typename TestValueType>
 struct test_base_data_visitor;
 
 ////////////////////////////////////////////////////////////////////////////////
-// struct test_base_data - test source data base class
+/// struct test_base_data - test source data base class
 template <typename TestValueType>
 struct test_base_data
 {
@@ -293,7 +293,7 @@ struct test_base_data_sequence : test_base_data<TestValueType>
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// struct test_base_data_visitor - interface of source test data visitor
+/// struct test_base_data_visitor - interface of source test data visitor
 template <typename TestValueType>
 struct test_base_data_visitor
 {
@@ -305,7 +305,7 @@ struct test_base_data_visitor
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// struct test_base_data_visitor_impl - base implementation of source test data visitor
+/// struct test_base_data_visitor_impl - base implementation of source test data visitor
 template <typename TestValueType, typename Iterator>
 struct test_base_data_visitor_impl : test_base_data_visitor<TestValueType>
 {
@@ -320,7 +320,7 @@ struct test_base_data_visitor_impl : test_base_data_visitor<TestValueType>
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// struct test_base_data_visitor_retrieve - implementation of retrieve data visitor
+/// struct test_base_data_visitor_retrieve - implementation of retrieve data visitor
 template <typename TestValueType, typename Iterator>
 struct test_base_data_visitor_retrieve : test_base_data_visitor_impl<TestValueType, Iterator>
 {
@@ -339,7 +339,7 @@ struct test_base_data_visitor_retrieve : test_base_data_visitor_impl<TestValueTy
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// struct test_base_data_visitor_update - implementation of update data visitor
+/// struct test_base_data_visitor_update - implementation of update data visitor
 template <typename TestValueType, typename Iterator>
 struct test_base_data_visitor_update : test_base_data_visitor_impl<TestValueType, Iterator>
 {
