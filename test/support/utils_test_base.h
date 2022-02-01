@@ -129,8 +129,8 @@ struct test_base_data_usm : test_base_data<TestValueType>
 
     struct InitParam
     {
-        ::std::size_t size   = 0;
-        ::std::size_t offset = 0;
+        ::std::size_t size   = 0;   // Source test data size
+        ::std::size_t offset = 0;   // Offset from test data
     };
 
     test_base_data_usm(sycl::usm::alloc alloc_type, sycl::queue __q, ::std::initializer_list<InitParam> init)
