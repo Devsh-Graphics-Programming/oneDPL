@@ -28,6 +28,11 @@ message(STATUS "Configuring ${PROJECT_NAME} ${PROJECT_VERSION}")
 find_program(FIND_GXX_EXE g++)
 if (FIND_GXX_EXE)
     execute_process(COMMAND ${FIND_GXX_EXE} -dumpfullversion OUTPUT_VARIABLE _onedpl_gxx_version)
+
+    if(NOT _onedpl_gxx_version)
+        unset(FIND_GXX_EXE)
+        unset(FIND_GXX_EXE CACHE)
+    endif()
 endif()
 
 option(ONEDPL_FPGA_STATIC_REPORT "Enable the static report generation for the FPGA device" OFF)
@@ -271,6 +276,8 @@ add_subdirectory(test)
 ###############################################################################
 # Installation instructions
 ###############################################################################
+set(CMAKE_INSTALL_FULL_LIBDIR "${ONE_DPL_INSTALL_OVERRIDE}" CACHE PATH "" FORCE)
+
 install(CODE "set(OUTPUT_DIR \"${CMAKE_INSTALL_FULL_LIBDIR}/cmake/oneDPL\")")
 install(CODE "set(SKIP_HEADERS_SUBDIR TRUE)")
 install(SCRIPT cmake/scripts/generate_config.cmake)
